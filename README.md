@@ -1,4 +1,4 @@
-#Algorithm Demos
+# Algorithm Demos
 
 Demonstrations of various programming algorithms. A client-side React app.
 

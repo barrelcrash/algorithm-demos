@@ -1,3 +1,4 @@
+import history from '../services/history';
 
 var defaultSortArray = [
   4, 8, 3, 0, 2, 8, 3, 7, 9, 5
@@ -23,6 +24,8 @@ function quicksort_int(array, left, right) {
   swap(array, left, randomIntIncl(left, right)); // set pivot
   
   var compInd = left; // comparison index
+
+  // TODO: add history tracking
 
   for (var i = left + 1; i <= right; i++) {
     if (compareNum(array[i], array[left]) < 0) {

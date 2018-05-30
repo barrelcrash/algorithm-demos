@@ -10,7 +10,7 @@
 /build
 
 # editing
-.swp
+*.swp
 
 # misc
 .DS_Store

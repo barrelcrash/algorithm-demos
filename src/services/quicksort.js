@@ -13,11 +13,15 @@ class QuickSort extends Sort {
     return QuickSort.instance;
   }
 
-  initSort() {
-    this.sort(this.values, 0, this.values.length - 1);
+  run() {
+    console.log("running quicksort");
+    let hasString =
+      this.values.some(x => typeof x === 'string'); // determines comparison method
+    this.sort(this.values, 0, this.values.length - 1, hasString);
   }
 
-  sort(array, left, right) {
+  sort(array, left, right, hasString) {
+
 
     if (left === 0 && right === array.length - 1) {
       this.saveStep();
@@ -30,10 +34,10 @@ class QuickSort extends Sort {
 
     this.swap(array, left, this.randomIntIncl(left, right)); // set pivot
     
-    var compInd = left; // comparison index
+    let compInd = left; // comparison index
 
     for (var i = left + 1; i <= right; i++) {
-      if (this.compareNum(array[i], array[left]) < 0) {
+      if (this.compare(array[i], array[left], hasString) < 0) {
         compInd++;
         this.swap(array, compInd, i);
       }
@@ -46,19 +50,19 @@ class QuickSort extends Sort {
     this.sort(array, compInd + 1, right); // sort right of pivot
   }
 
-  compareNum(a, b) {
-    if (typeof a !== 'number' && typeof b !== 'number') {
-      console.error('compareInt: value is not a number');
-      return;
+  compare(a, b, hasString) {
+
+    let validTypes = ['number', 'string'];
+    if (!validTypes.includes(typeof a)
+      || !validTypes.includes(typeof b)) {
+      throw new TypeError("Can only compare numbers and/or strings!");
     }
 
-    if (a < b) {
-      return -1;
-    } else if (a === b) {
-      return 0;
-    } else {
-      return 1;
+    if (hasString) {
+      return a.toString().localeCompare(b.toString());
     }
+
+    return a - b;
   }
 
   swap(array, i, j) {

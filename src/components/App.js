@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
+import ValuesInput from './valuesInput';
 import {quicksort} from '../services/quicksort';
 import '../styles/App.css';
-
-var defaultSortArray = [ 
-  4, 8, 3, 0, 2, 8, 3, 7, 9, 5
-];
 
 function getArrayString(array) {
   var arrayString = "";
@@ -17,18 +14,49 @@ function getArrayString(array) {
   return arrayString;
 }
 
-quicksort.setValues(defaultSortArray);
-quicksort.initSort();
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      algorithm: quicksort
+    }
+
+    // seed default values for algorithm and input
+    this.defaultValues = [4, 8, 3, 0, 2, 8, 3, 7, 9, 5];
+    this.state.algorithm.setValues(this.defaultValues);
+
+    this.updateAndRun = this.updateAndRun.bind(this);
+  }
+
+  updateAndRun(values) {
+    this.state.algorithm.setValues(values);
+    this.state.algorithm.run();
+    this.setState({
+      firstStep: getArrayString(this.state.algorithm.getStep(0).getValue()),
+      finalStep: getArrayString(this.state.algorithm.getFinalStep().getValue())
+    });
+  }
+
+  componentDidMount() {
+    this.state.algorithm.run();
+    this.setState({
+      firstStep: getArrayString(this.state.algorithm.getStep(0).getValue()),
+      finalStep: getArrayString(this.state.algorithm.getFinalStep().getValue())
+    });
+  }
+
   render() {
+    console.log(this.state.algorithm.getNumSteps());
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Algorithm Demos</h1>
         </header>
-        <p className="App-intro">{getArrayString(quicksort.getStep(0).getValue())}</p>
-        <p className="App-intro">{getArrayString(quicksort.getStep(quicksort.getNumSteps() - 1).getValue())}</p>
+        <ValuesInput updateAndRun={this.updateAndRun} defaultValues={getArrayString(this.defaultValues)}/>
+        <p className="App-intro">{this.state.firstStep}</p>
+        <p className="App-intro">{this.state.finalStep}</p>
       </div>
     );
   }

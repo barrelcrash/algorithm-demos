@@ -47,8 +47,15 @@ class App extends Component {
     });
   }
 
+  // for debugging
+  printSteps() {
+    for (var i = 0; i < this.state.algorithm.getNumSteps(); i++) {
+      console.log(getArrayString(this.state.algorithm.getStep(i).getValue()));
+    }
+  }
+
   render() {
-    console.log(this.state.algorithm.getNumSteps());
+    this.printSteps();
     return (
       <div className="App">
         <header className="App-header">

@@ -12,16 +12,15 @@ class QuickSort extends Sort {
     }
     return QuickSort.instance;
   }
-
+  
+  // determine comparison method and start the sort
   run() {
-    console.log("running quicksort");
-    let hasString =
-      this.values.some(x => typeof x === 'string'); // determines comparison method
-    this.sort(this.values, 0, this.values.length - 1, hasString);
+    let cmp =
+      this.values.some(x => typeof x === 'string') ? this.cmpString : this.cmpI;
+    this.sort(this.values, 0, this.values.length - 1, cmp);
   }
 
-  sort(array, left, right, hasString) {
-
+  sort(array, left, right, cmp) {
 
     if (left === 0 && right === array.length - 1) {
       this.saveStep();
@@ -32,47 +31,44 @@ class QuickSort extends Sort {
       return;
     }
 
-    this.swap(array, left, this.randomIntIncl(left, right)); // set pivot
-    
-    let compInd = left; // comparison index
+    let rand = this.randomIntIncl(left, right);
 
-    for (var i = left + 1; i <= right; i++) {
-      if (this.compare(array[i], array[left], hasString) < 0) {
-        compInd++;
-        this.swap(array, compInd, i);
+    // console.log("pivot: ", rand);
+
+    this.swap(array, left, rand); // set pivot
+    
+    let last = left;
+
+    for (let i = left + 1; i <= right; i++) {
+      if (cmp(array[i], array[left]) < 0) {
+        this.swap(array, ++last, i);
       }
     }
 
     this.saveStep();
 
-    this.swap(array, left, compInd); // reset pivot
-    this.sort(array, left, compInd - 1); // sort left of pivot
-    this.sort(array, compInd + 1, right); // sort right of pivot
+    this.swap(array, left, last); // reset pivot
+    this.sort(array, left, last - 1, cmp); // sort left of pivot
+    this.sort(array, last + 1, right, cmp); // sort right of pivot
   }
 
-  compare(a, b, hasString) {
-
-    let validTypes = ['number', 'string'];
-    if (!validTypes.includes(typeof a)
-      || !validTypes.includes(typeof b)) {
-      throw new TypeError("Can only compare numbers and/or strings!");
-    }
-
-    if (hasString) {
-      return a.toString().localeCompare(b.toString());
-    }
-
+  cmpI(a, b) {
     return a - b;
   }
 
+  cmpString(a, b) {
+    return a.toString().localeCompare(b.toString());
+  }
+
   swap(array, i, j) {
+    console.log("swapping pos: ", i, j);
     var temp = array[i];
     array[i] = array[j];
     array[j] = temp;
   }
 
   randomIntIncl(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return min + Math.floor(Math.random() * (max - min + 1));
   }
 }
 

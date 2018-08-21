@@ -33,8 +33,6 @@ class QuickSort extends Sort {
 
     let rand = this.randomIntIncl(left, right);
 
-    // console.log("pivot: ", rand);
-
     this.swap(array, left, rand); // set pivot
     
     let last = left;
@@ -48,6 +46,9 @@ class QuickSort extends Sort {
     this.saveStep();
 
     this.swap(array, left, last); // reset pivot
+    
+    this.saveStep();
+
     this.sort(array, left, last - 1, cmp); // sort left of pivot
     this.sort(array, last + 1, right, cmp); // sort right of pivot
   }
@@ -61,7 +62,6 @@ class QuickSort extends Sort {
   }
 
   swap(array, i, j) {
-    console.log("swapping pos: ", i, j);
     var temp = array[i];
     array[i] = array[j];
     array[j] = temp;

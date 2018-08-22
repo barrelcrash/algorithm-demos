@@ -22,6 +22,7 @@ class QuickSort extends Sort {
 
   sort(array, left, right, cmp) {
 
+    // remember inital state
     if (left === 0 && right === array.length - 1) {
       this.saveStep();
     }
@@ -34,6 +35,8 @@ class QuickSort extends Sort {
     let rand = this.randomIntIncl(left, right);
 
     this.swap(array, left, rand); // set pivot
+    
+    this.saveStep(); // remember pivot set
     
     let last = left;
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {createSortValue} from "../services/sortUtils";
 
 export default class ValuesInput extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ export default class ValuesInput extends Component {
   parseInput(text) {
     let inputs = text.split(',');
     inputs = inputs.map(x =>  x.trim());
-    inputs = inputs.map(x => isNaN(parseInt(x, 10)) ? x : parseInt(x, 10));
+    inputs = inputs.map(x => createSortValue(isNaN(parseInt(x, 10)) ? x : parseInt(x, 10)));
     return inputs;
   }
 

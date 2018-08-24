@@ -41,7 +41,7 @@ class QuickSort extends Sort {
     let last = left;
 
     for (let i = left + 1; i <= right; i++) {
-      if (cmp(array[i], array[left]) < 0) {
+      if (cmp(array[i].value, array[left].value) < 0) {
         this.swap(array, ++last, i);
       }
     }

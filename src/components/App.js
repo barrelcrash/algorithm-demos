@@ -29,7 +29,6 @@ class App extends Component {
     // seed default values for algorithm and input
     this.defaultValues = [4, 8, 3, 0, 2, 8, 3, 7, 9, 5];
     this.defaultValues = this.defaultValues.map(x => createSortValue(x));
-    this.state.algorithm.setValues(this.defaultValues);
 
     this.updateAndRun = this.updateAndRun.bind(this);
   }
@@ -39,19 +38,14 @@ class App extends Component {
     this.state.algorithm.setValues(values);
     this.state.algorithm.run();
     this.setState({
-      data: this.state.algorithm.getStep(0).getValue(),
+      data: this.state.algorithm.getStep(4).getValue(),
       firstStep: getArrayString(this.state.algorithm.getStep(0).getValue().map(x => x.value)),
       finalStep: getArrayString(this.state.algorithm.getFinalStep().getValue().map(x => x.value))
     });
   }
 
   componentDidMount() {
-    this.state.algorithm.run();
-    this.setState({
-      data: this.state.algorithm.getStep(0).getValue(),
-      firstStep: getArrayString(this.state.algorithm.getStep(0).getValue().map(x => x.value)),
-      finalStep: getArrayString(this.state.algorithm.getFinalStep().getValue().map(x => x.value))
-    });
+    this.updateAndRun(this.defaultValues);
   }
 
   // for debugging

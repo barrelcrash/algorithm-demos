@@ -43,8 +43,10 @@ class QuickSort extends Sort {
     this.saveStep({pivot, active}); // remember pivot set
 
     for (active = left + 1; active <= right; active++) {
+      this.saveStep({pivot, active});
       if (cmp(array[active].value, array[left].value) < 0) {
         this.swap(array, ++pivot, active);
+        this.saveStep({pivot, active});
       }
     }
 

@@ -7,14 +7,19 @@ export class Sort {
   }
 
   saveStep(options) {
-    let vals = this.values;
-    if (options.pivot) {
-      vals[options.pivot].pivot = true;
-    }
-    if (options.active) {
-      vals[options.active].active = true;
-    }
-    this.caretaker.add(new Memento(vals.slice()));
+    let vals = this.values.slice();
+    vals.forEach((x, i) => {
+      x.pivot = false;
+      x.active = false;
+      console.log(options.pivot, options.active, i);
+      if (options.pivot === i) {
+        x.pivot = true;
+      }
+      if (options.active === i) {
+        x.active = true;
+      }
+    });
+    this.caretaker.add(new Memento(vals));
   }
 
   getStep(index) {

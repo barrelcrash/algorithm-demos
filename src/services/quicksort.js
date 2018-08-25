@@ -22,9 +22,11 @@ class QuickSort extends Sort {
 
   sort(array, left, right, cmp) {
 
+    let pivot, active;
+
     // remember inital state
     if (left === 0 && right === array.length - 1) {
-      this.saveStep();
+      this.saveStep({pivot, active});
     }
 
     // nothing to do
@@ -36,24 +38,26 @@ class QuickSort extends Sort {
 
     this.swap(array, left, rand); // set pivot
     
-    this.saveStep(); // remember pivot set
+    pivot = left;
     
-    let last = left;
+    this.saveStep({pivot, active}); // remember pivot set
 
-    for (let i = left + 1; i <= right; i++) {
-      if (cmp(array[i].value, array[left].value) < 0) {
-        this.swap(array, ++last, i);
+    for (active = left + 1; active <= right; active++) {
+      if (cmp(array[active].value, array[left].value) < 0) {
+        this.swap(array, ++pivot, active);
       }
     }
 
-    this.saveStep();
+    active = null; // active is outside of array
 
-    this.swap(array, left, last); // reset pivot
+    this.saveStep({pivot, active});
+
+    this.swap(array, left, pivot); // reset pivot
     
-    this.saveStep();
+    this.saveStep({pivot, active});
 
-    this.sort(array, left, last - 1, cmp); // sort left of pivot
-    this.sort(array, last + 1, right, cmp); // sort right of pivot
+    this.sort(array, left, pivot - 1, cmp); // sort left of pivot
+    this.sort(array, pivot + 1, right, cmp); // sort right of pivot
   }
 
   cmpI(a, b) {

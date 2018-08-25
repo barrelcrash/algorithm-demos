@@ -6,8 +6,15 @@ export class Sort {
     this.caretaker = new Caretaker();
   }
 
-  saveStep() {
-    this.caretaker.add(new Memento(this.values.slice()));
+  saveStep(options) {
+    let vals = this.values;
+    if (options.pivot) {
+      vals[options.pivot].pivot = true;
+    }
+    if (options.active) {
+      vals[options.active].active = true;
+    }
+    this.caretaker.add(new Memento(vals.slice()));
   }
 
   getStep(index) {

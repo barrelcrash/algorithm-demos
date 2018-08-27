@@ -38,7 +38,7 @@ class App extends Component {
     this.state.algorithm.setValues(values);
     this.state.algorithm.run();
     this.setState({
-      data: this.state.algorithm.getStep(4).getValue(),
+      data: this.state.algorithm.getStep(2).getValue(),
       firstStep: getArrayString(this.state.algorithm.getStep(0).getValue().map(x => x.value)),
       finalStep: getArrayString(this.state.algorithm.getFinalStep().getValue().map(x => x.value))
     });

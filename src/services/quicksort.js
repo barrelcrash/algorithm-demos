@@ -1,8 +1,5 @@
 import {Sort} from './sort';
 
-// default values provided prior to user input
-
-
 class QuickSort extends Sort {
 
   constructor() {
@@ -15,8 +12,7 @@ class QuickSort extends Sort {
   
   // determine comparison method and start the sort
   run() {
-    let cmp =
-      this.values.some(x => typeof x === 'string') ? this.cmpString : this.cmpI;
+    let cmp = this.values.some(x => typeof x === 'string') ? this.cmpString : this.cmpI;
     this.sort(this.values, 0, this.values.length - 1, cmp);
   }
 

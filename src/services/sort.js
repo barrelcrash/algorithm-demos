@@ -16,8 +16,6 @@ export class Sort {
     vals.forEach((x, i) => {
 
       x.stepId = this.stepCount;
-      x.pivot = false;
-      x.active = false;
 
       if (options.pivot === i) {
         x.pivot = true;
